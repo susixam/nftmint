@@ -1,6 +1,6 @@
 # NFT Mint — Full Stack
 
-A full-stack NFT minting project built with **Solidity**, **Foundry**, and **React**. Test on Sepolia first.
+A full-stack NFT minting project built with **Solidity**, **Foundry**, and **React**. Deploys to Base chain.
 
 ## Structure
 
@@ -24,7 +24,7 @@ A full-stack NFT minting project built with **Solidity**, **Foundry**, and **Rea
   - **WSL:** In WSL terminal, run the same commands. Use `bash -c "~/.foundry/bin/forge build"` from PowerShell, or run `forge` directly from WSL.
   - **From this repo:** Run `.\scripts\install-foundry.ps1` for full instructions.
 - [Node.js](https://nodejs.org/) 18+
-- Sepolia testnet ETH — get from [Sepolia Faucet](https://sepoliafaucet.com/)
+- Base mainnet ETH — get from [Base Bridge](https://bridge.base.org/) or your exchange
 
 ## 1. Install Dependencies
 
@@ -47,30 +47,45 @@ forge build
 forge test
 ```
 
-## 3. Deploy to Sepolia
+## 3. Deploy to Base
 
 1. Copy `.env.example` to `.env` and fill in:
 
 ```
 PRIVATE_KEY=your_wallet_private_key
-SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/YOUR_KEY
-ETHERSCAN_API_KEY=your_etherscan_api_key  # optional, for verification
+BASE_RPC_URL=https://base-mainnet.g.alchemy.com/v2/YOUR_KEY
+ETHERSCAN_API_KEY=your_etherscan_api_key  # for Basescan verification
 ```
 
-2. Deploy (and verify on Etherscan):
+2. Deploy (and verify on Basescan):
 
 ```bash
-forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url sepolia --broadcast --verify
+forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url base --broadcast --verify --delay 15
 ```
 
 Or use npm: `npm run deploy`
 
-Ensure `ETHERSCAN_API_KEY` is set in `.env` for verification.
+Ensure `ETHERSCAN_API_KEY` or `BASESCAN_API_KEY` is set in `.env` for verification.
+
+**Chain IDs:** Base = 8453, Sepolia = 11155111. If auto-verify fails, run:
+```bash
+# Base (chain-id 8453)
+forge verify-contract <CONTRACT_ADDRESS> src/NFTMint.sol:NFTMint --chain-id 8453
+
+# Sepolia (chain-id 11155111)
+forge verify-contract <CONTRACT_ADDRESS> src/NFTMint.sol:NFTMint --chain-id 11155111
+```
+
+**Test on Sepolia first:**
+```bash
+npm run deploy:sepolia
+```
 
 **WSL users:** If you get "Could not find target contract", use the Node.js deploy instead:
 ```bash
 npm install
-npm run deploy:node
+npm run deploy:node          # Base
+npm run deploy:node:sepolia # Sepolia
 ```
 
 3. Optional env vars for deployment:
@@ -93,7 +108,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173 — connect your wallet (Sepolia) and mint.
+Open http://localhost:5173 — connect your wallet (Base) and mint.
 
 ## Contract
 

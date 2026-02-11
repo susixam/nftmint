@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { ConnectButton, useChainModal } from "@rainbow-me/rainbowkit";
 import {
   useAccount,
+  useChainId,
   useReadContract,
   useWriteContract,
   useWaitForTransactionReceipt,
@@ -177,13 +178,30 @@ function MintSection() {
   );
 }
 
+function Header() {
+  const chainId = useChainId();
+  const { openChainModal } = useChainModal();
+  const chainName = chainId === 8453 ? "Base" : chainId === 11155111 ? "Sepolia" : `Chain ${chainId}`;
+
+  return (
+    <header>
+      <h1>NFT Mint</h1>
+      <div className="header-actions">
+        {openChainModal && (
+          <button type="button" className="chain-btn" onClick={openChainModal}>
+            {chainName}
+          </button>
+        )}
+        <ConnectButton />
+      </div>
+    </header>
+  );
+}
+
 function App() {
   return (
     <div className="app">
-      <header>
-        <h1>NFT Mint</h1>
-        <ConnectButton />
-      </header>
+      <Header />
       <main>
         <MintSection />
       </main>

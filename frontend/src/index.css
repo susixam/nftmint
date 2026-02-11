@@ -44,6 +44,18 @@ h1 {
   margin: 0;
 }
 
+.header-title-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.chains-hint {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
 .header-actions {
   display: flex;
   align-items: center;

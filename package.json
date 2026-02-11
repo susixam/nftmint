@@ -7,7 +7,12 @@
     "deploy:dry": "forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url base",
     "deploy:sepolia": "forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url sepolia --broadcast --verify --delay 15",
     "deploy:node": "forge build && node scripts/deploy-node.js",
-    "deploy:node:sepolia": "forge build && node scripts/deploy-node.js --chain sepolia"
+    "deploy:node:sepolia": "forge build && node scripts/deploy-node.js --chain sepolia",
+    "test": "forge test",
+    "test:fork": "forge test --match-contract NFTMintForkTest",
+    "test:fork:base": "forge test --match-contract NFTMintForkTest --match-test test_Fork_Base",
+    "test:fork:ethereum": "forge test --match-contract NFTMintForkTest --match-test test_Fork_Ethereum",
+    "test:fork:sepolia": "forge test --match-contract NFTMintForkTest --match-test test_Fork_Sepolia"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.6",

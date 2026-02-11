@@ -3,9 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "deploy": "forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url sepolia --broadcast --verify --delay 15",
-    "deploy:dry": "forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url sepolia",
-    "deploy:node": "forge build && node scripts/deploy-node.js"
+    "deploy": "forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url base --broadcast --verify --delay 15",
+    "deploy:dry": "forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url base",
+    "deploy:sepolia": "forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url sepolia --broadcast --verify --delay 15",
+    "deploy:node": "forge build && node scripts/deploy-node.js",
+    "deploy:node:sepolia": "forge build && node scripts/deploy-node.js --chain sepolia"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.6",

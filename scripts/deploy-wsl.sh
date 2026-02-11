@@ -9,4 +9,4 @@ WIN_PATH=$(wslpath -w "$PROJECT_DIR" 2>/dev/null || echo "$PROJECT_DIR")
 echo "Running deploy from Windows (WSL workaround)..."
 echo "Project path: $WIN_PATH"
 
-cmd.exe /c "cd /d \"$WIN_PATH\" && forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url sepolia --broadcast"
+cmd.exe /c "cd /d \"$WIN_PATH\" && forge script script/Deploy.s.sol --target-contract DeployScript --rpc-url base --broadcast --verify --delay 15"

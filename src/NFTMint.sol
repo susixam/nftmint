@@ -44,14 +44,14 @@ contract NFTMint is ERC721, Ownable {
     function mint() external payable {
         if (msg.value < mintPrice) revert InsufficientPayment();
 
-        uint256 tokenId = uint256(_nextTokenId) + 1;
-        if (tokenId > _maxSupply) revert MaxSupplyReached();
-
+        uint64 next = _nextTokenId;
+        uint64 max = _maxSupply;
         unchecked {
+            uint256 tokenId = uint256(next) + 1;
+            if (tokenId > max) revert MaxSupplyReached();
             _nextTokenId = uint64(tokenId);
+            _safeMint(msg.sender, tokenId);
         }
-
-        _safeMint(msg.sender, tokenId);
         _forwardMintPaymentToOwner(msg.value);
     }
 
@@ -59,29 +59,31 @@ contract NFTMint is ERC721, Ownable {
         if (amount == 0) revert ZeroAmount();
         if (msg.value < mintPrice * amount) revert InsufficientPayment();
 
-        uint256 startId = uint256(_nextTokenId) + 1;
-        if (startId + amount - 1 > _maxSupply) revert MaxSupplyReached();
+        uint64 next = _nextTokenId;
+        uint64 max = _maxSupply;
+        uint256 startId = uint256(next) + 1;
+        if (amount > max - next) revert MaxSupplyReached(); // startId + amount - 1 <= max
 
-        for (uint256 i = 0; i < amount; ) {
-            _safeMint(msg.sender, startId + i);
-            unchecked {
+        unchecked {
+            uint256 endId = startId + amount - 1;
+            for (uint256 i = 0; i < amount; ) {
+                _safeMint(msg.sender, startId + i);
                 ++i;
             }
-        }
-        unchecked {
-            _nextTokenId = uint64(startId + amount - 1); // last minted id
+            _nextTokenId = uint64(endId);
         }
         _forwardMintPaymentToOwner(msg.value);
     }
 
     function _forwardMintPaymentToOwner(uint256 amount) private {
         if (amount == 0) return;
-        (bool success, ) = owner().call{value: amount}("");
+        address o = owner();
+        (bool success, ) = o.call{value: amount}("");
         if (!success) revert ForwardFailed();
     }
 
     function totalSupply() external view returns (uint256) {
-        return uint256(_nextTokenId);
+        return _nextTokenId; // already uint64, zero-cost cast to uint256
     }
 
     function setBaseURI(string calldata baseTokenURI_) external onlyOwner {

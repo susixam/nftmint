@@ -181,11 +181,21 @@ function MintSection() {
 function Header() {
   const chainId = useChainId();
   const { openChainModal } = useChainModal();
-  const chainName = chainId === 8453 ? "Base" : chainId === 11155111 ? "Sepolia" : `Chain ${chainId}`;
+  const chainName =
+    chainId === 1
+      ? "Ethereum"
+      : chainId === 8453
+        ? "Base"
+        : chainId === 11155111
+          ? "Sepolia"
+          : `Chain ${chainId}`;
 
   return (
     <header>
-      <h1>NFT Mint</h1>
+      <div className="header-title-row">
+        <h1>NFT Mint</h1>
+        <span className="chains-hint">Ethereum · Base · Sepolia</span>
+      </div>
       <div className="header-actions">
         {openChainModal && (
           <button type="button" className="chain-btn" onClick={openChainModal}>

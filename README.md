@@ -47,6 +47,15 @@ forge build
 forge test
 ```
 
+**Test contract on all supported chains (fork tests):**
+```bash
+npm run test:fork          # Base, Ethereum, Sepolia (uses public RPCs)
+npm run test:fork:base     # Base only
+npm run test:fork:ethereum # Ethereum only
+npm run test:fork:sepolia  # Sepolia only
+```
+With your own RPC (e.g. from `.env`): `forge test --fork-url $BASE_RPC_URL` (and same for `ETHEREUM_RPC_URL`, `SEPOLIA_RPC_URL`).
+
 ## 3. Deploy to Base
 
 1. Copy `.env.example` to `.env` and fill in:
@@ -67,8 +76,11 @@ Or use npm: `npm run deploy`
 
 Ensure `ETHERSCAN_API_KEY` or `BASESCAN_API_KEY` is set in `.env` for verification.
 
-**Chain IDs:** Base = 8453, Sepolia = 11155111. If auto-verify fails, run:
+**Chain IDs:** Ethereum = 1, Base = 8453, Sepolia = 11155111. If auto-verify fails, run:
 ```bash
+# Ethereum (chain-id 1)
+forge verify-contract <CONTRACT_ADDRESS> src/NFTMint.sol:NFTMint --chain-id 1
+
 # Base (chain-id 8453)
 forge verify-contract <CONTRACT_ADDRESS> src/NFTMint.sol:NFTMint --chain-id 8453
 
@@ -108,7 +120,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173 — connect your wallet (Base) and mint.
+Open http://localhost:5173 — connect your wallet (Ethereum, Base, or Sepolia) and mint.
 
 ## Contract
 

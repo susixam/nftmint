@@ -1,6 +1,6 @@
 import { getDefaultConfig, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { zerionWallet } from "@rainbow-me/rainbowkit/wallets";
-import { base, sepolia } from "wagmi/chains";
+import { base, mainnet, sepolia } from "wagmi/chains";
 
 const { wallets: defaultWallets } = getDefaultWallets();
 const walletsWithZerion = defaultWallets.map((group, i) =>
@@ -12,6 +12,6 @@ const walletsWithZerion = defaultWallets.map((group, i) =>
 export const config = getDefaultConfig({
   appName: "NFT Mint",
   projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID",
-  chains: [base, sepolia],
+  chains: [mainnet, base, sepolia],
   wallets: walletsWithZerion,
 });

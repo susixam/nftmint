@@ -1,0 +1,22 @@
+# Foundry
+lib/
+out/
+cache/
+broadcast/
+
+# Environment - NEVER commit secrets
+.env
+.env.*
+.env.local
+.env.*.local
+**/.env
+**/.env.*
+frontend/.env
+frontend/.env.*
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+frontend/dist/

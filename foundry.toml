@@ -1,0 +1,30 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+script = "script"
+solc = "0.8.20"
+optimizer = true
+optimizer_runs = 10000
+
+[rpc_endpoints]
+sepolia = "${SEPOLIA_RPC_URL}"
+# Mainnets – set the matching RPC URL in .env (e.g. ETHEREUM_RPC_URL, ARBITRUM_RPC_URL)
+ethereum = "${ETHEREUM_RPC_URL}"
+arbitrum = "${ARBITRUM_RPC_URL}"
+optimism = "${OPTIMISM_RPC_URL}"
+base = "${BASE_RPC_URL}"
+polygon = "${POLYGON_RPC_URL}"
+bnb = "${BNB_RPC_URL}"
+avalanche = "${AVALANCHE_RPC_URL}"
+
+[etherscan]
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
+# Mainnet explorers – same API key often works for Etherscan-family (Etherscan, Arbiscan, Basescan, etc.)
+ethereum = { key = "${ETHERSCAN_API_KEY}", url = "https://api.etherscan.io/api" }
+arbitrum = { key = "${ARBISCAN_API_KEY}", url = "https://api.arbiscan.io/api" }
+optimism = { key = "${OPTIMISTIC_ETHERSCAN_API_KEY}", url = "https://api-optimistic.etherscan.io/api" }
+base = { key = "${BASESCAN_API_KEY}", url = "https://api.basescan.org/api" }
+polygon = { key = "${POLYGONSCAN_API_KEY}", url = "https://api.polygonscan.com/api" }
+bnb = { key = "${BSCSCAN_API_KEY}", url = "https://api.bscscan.com/api" }
+avalanche = { key = "${SNOWTRACE_API_KEY}", url = "https://api.snowtrace.io/api" }

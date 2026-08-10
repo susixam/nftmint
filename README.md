@@ -23,6 +23,12 @@ A full-stack NFT minting project built with **Solidity**, **Foundry**, and **Rea
     Then add `C:\Users\<YOU>\.foundry\bin` to your Windows PATH.
   - **WSL:** In WSL terminal, run the same commands. Use `bash -c "~/.foundry/bin/forge build"` from PowerShell, or run `forge` directly from WSL.
   - **From this repo:** Run `.\scripts\install-foundry.ps1` for full instructions.
+- **Windows PATH note:** After installing anything via `winget` (Git, Node, Foundry), an
+  already-open terminal keeps its old PATH, so the new command still reports "not
+  recognized." Open a fresh window, or reload PATH in the current session:
+  ```powershell
+  $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+  ```
 - [Node.js](https://nodejs.org/) 18+
 - Base mainnet ETH — get from [Base Bridge](https://bridge.base.org/) or your exchange
 
